@@ -44,9 +44,9 @@
                                 <div class="row">
                                     <div class="col-lg-8 col-md-10">
                                         <h5>Nama Pelanggan : <?php echo $pelanggan["nama_pelanggan"];?></h5>
-                                        <h6>ID Pelanggan : <?php echo $anggota["id_pelanggan"]?></h6>
+                                        <h6>ID Pelanggan : <?php echo $pelanggan["id_pelanggan"]?></h6>
                                         <h6>Alamat Pelanggan : <?php echo $pelanggan["alamat_pelanggan"]?></h6>
-                                        <h6>Kontak : <?php echo $anggota["kontak"]?></h6>
+                                        <h6>Kontak : <?php echo $pelanggan["kontak"]?></h6>
                                     </div>
 
                                     <div class="col-lg-4 col-md-2">
@@ -56,7 +56,7 @@
                                             </button>
                                         </a>
 
-                                        <a href="delete.php?id_pelanggan<?=$pelanggan["id_pelanggan"]?>"
+                                        <a href="process-pelanggan.php?id_pelanggan<?=$pelanggan["id_pelanggan"]?>"
                                         onclick="return confirm('Apakah anda yakin?')">
                                             <button class="btn btn-danger btn-block">
                                                 Hapus Data
