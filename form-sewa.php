@@ -1,3 +1,9 @@
+<?php 
+session_start();
+if (isset($_SESSION["karyawan"])) {
+    header("location:login.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,10 +14,21 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
+    <nav class="navbar navbar-expand-md bg-info navbar-dark mb-2">
+            <!-- Brand -->
+            <a class="navbar-brand" href="list-mobil.php">Home</a>
+
+            <!-- Toggler/collapsibe Button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+
+        </nav> 
     <div class="container">
         <div class="card">
-            <div class="card-header bg-info">
-                <h4 class="text-white">
+            <div class="card-header bg-white">
+            
+                <h4 class="text-black">
                     Form Penyewaan Mobil
                 </h4>
             </div>
@@ -28,24 +45,34 @@
                     required>
                     <?php 
                         include "connection.php";
-                        $sql = "select  from mobil";
+                        $sql = "select * from mobil";
                         $hasil = mysqli_query($connect, $sql);
                         while ($mobil = mysqli_fetch_array($hasil)) {
                         ?>
                         <option value="<?=($mobil["id_mobil"])?>">
-                                <?=($mobil["nama_mobil"])?>
+                                <?=($mobil["id_mobil"])?>
                         </option>
                         <?php
                         }
                     ?>
                     </select>
 
-                    
-
                     ID Karyawan 
-                    <input type="text" name="nama_karyawan" 
-                    class="form-control mb-2" readonly
-                    value="<?=($_SESSION["karyawan"]["nama_karyawan"])?>">
+                    <select name="id_karyawan" class="form-control mb-2"
+                    required>
+                        <?php 
+                        include "connection.php";
+                        $sql = "select * from karyawan";
+                        $hasil = mysqli_query($connect, $sql);
+                        while ($karyawan = mysqli_fetch_array($hasil)) {
+                            ?>
+                            <option value="<?=($karyawan["id_karyawan"])?>">
+                                <?=($karyawan["id_karyawan"])?>
+                            </option>
+                        <?php 
+                        }
+                        ?>
+                    </select>
 
                     ID Pelanggan
                     <select name="id_pelanggan" class="form-control mb-2"
@@ -67,18 +94,18 @@
                     <?php 
                     date_default_timezone_set('Asia/Jakarta');
                     ?>
-
+                    
                     Tanggal Sewa 
-                    <input type="text" name="tgl_sewa" 
-                    class="form-control mb-2" readonly
-                    value="<?=(date("Y-m-d H:i:s"))?>">
+                    <input type="date" name="tgl_sewa" 
+                    class="form-control mb-2" required>
 
                     Tanggal Kembali
-                    <input type="text" name="tgl_kembali" 
-                    class="form-control mb-2" readonly
-                    value="<?(date("Y-m-d H:i:s"))?>">
+                    <input type="date" name="tgl_kembali" 
+                    class="form-control mb-2" required>
 
-                    Total Bayar 
+                    <button type="submit" class="btn btn-success btn-block ">
+                        Sewa
+                    </button>
                 </form>
             </div>
         </div>

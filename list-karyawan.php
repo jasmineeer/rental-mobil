@@ -8,11 +8,44 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
+<nav class="navbar navbar-expand-md bg-info navbar-dark mb-2">
+            <!-- Brand -->
+            <a class="navbar-brand" href="#">Rental Mobil</a>
+
+            <!-- Toggler/collapsibe Button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="login.php">Login Page</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="list-mobil.php">Data Mobil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="list-karyawan.php">Data Karyawan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="list-pelanggan.php">Data Pelanggan</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="list-sewa.php">Data Sewa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="form-sewa.php">Form Sewa</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     <div class="container">
         <div class="card">
-            <div class="card-header bg-dark">
-                <h4 class="text-white">
-                    Data Karyawan
+            <div class="card-header bg-white">
+                <h4 class="text-black">
+                    Data Karyawan Rental Mobil 
                 </h4>
             </div>
             <div class="card-body">
@@ -25,9 +58,10 @@
                     include "connection.php";
                     if (isset($_GET["search_karyawan"])) {
                         $search_karyawan = $_GET["search_karyawan"];
-                        $sql = "select * from karyawan where username like '%$search_karyawan%'
-                        or id_karyawan like '%$search_karyawan%' or nama_karyawan like '%$search_karyawan%'
-                        or alamat_karyawan like '%$search_karyawan%' or kontak  '%$search_karyawan%'";
+                        $sql = "select * from karyawan where id_karyawan like '%$search_karyawan%' 
+                        or nama_karyawan like '%$search_karyawan%'
+                        or alamat_karyawan like '%$search_karyawan%' 
+                        or kontak like '%$search_karyawan%'";
                     } else{
                         $sql = "select * from karyawan";
                     }
@@ -38,11 +72,10 @@
                     <li class="list-group-item">
                         <div class="row">
                             <div class="col-lg-8">
+                                <h5>Nama Karyawan : <?=($karyawan["nama_karyawan"])?></h5>
                                 <h6>ID Karyawan : <?=($karyawan["id_karyawan"])?></h6>
-                                <h6>Nama Karyawan : <?=($karyawan["nama_karyawan"])?></h6>
                                 <h6>Alamat Karyawan : <?=($karyawan["alamat_karyawan"])?></h6>
                                 <h6>Kontak : <?=($karyawan["kontak"])?></h6>
-                                <h6>Username : <?=($karyawan["username"])?></h6>
                             </div>
 
                             <div class="col-lg-4">
@@ -52,7 +85,7 @@
                                     </button>
                                 </a>
 
-                                <a href="process-karyawan.php?id_karyawan=<?=$karyawan["id_karyawan"]?>"
+                                <a href="delete-karyawan.php?id_karyawan=<?=$karyawan["id_karyawan"]?>"
                                 onclick="return confirm('Apakah anda yakin?')">
                                     <button class="btn btn-danger btn-block">
                                         Hapus Data 

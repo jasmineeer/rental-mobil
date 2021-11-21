@@ -8,27 +8,41 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
 </head>
 <body>
+        <nav class="navbar navbar-expand-md bg-info navbar-dark mb-2">
+            <!-- Brand -->
+            <a class="navbar-brand" href="list-mobil.php">Home</a>
+
+            <!-- Toggler/collapsibe Button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+
+        </nav>
     <div class="container">
         <div class="card">
-            <div class="card-header bg-danger">
-                <h4 class="text-white">
+            <div class="card-header bg-white">
+                <h4 class="text-black">
                     Form Mobil
                 </h4>
             </div>
 
             <div class="card-body">
                 <?php
+                include "connection.php";
+                # form edit
                 if (isset($_GET["id_mobil"])) {
-                    $isbn = $_GET["id_mobil"];
+                    $id_mobil = $_GET["id_mobil"];
                     $sql = "select * from mobil
                     where id_mobil='$id_mobil'";
 
-                    include "connection.php";
+                    # eksekusi sql
                     $hasil = mysqli_query($connect, $sql);
+                    # mengkonversikan data ke array
                     $mobil = mysqli_fetch_array($hasil);
                     ?>
                     
-                    <form action="process-mobil.php" method="post">
+                    <form action="process-mobil.php" method="post"
+                    enctype="multipart/form-data">
 
                     ID Mobil
                     <input type="number" name="id_mobil" 
@@ -60,8 +74,13 @@
                     class="form-control mb-2" required 
                     value="<?=$mobil["tahun_pembuatan"]?>">
 
+                    Biaya Sewa /Hari 
+                    <input type="number" name="biaya_sewa_perhari" 
+                    class="form-control mb-2" required 
+                    value="<?=$mobil["biaya_sewa_perhari"]?>">
+
                     Gambar <br>
-                    <img src="image/<?=$mobil["image"]?>" width="300" />
+                    <img src="gambar/<?=$mobil["image"]?>" width="300" />
                     <input type="file" name="image" class="form-control mb-2">
 
                     <button type="submit" class="btn btn-info btn-block"
@@ -72,7 +91,9 @@
                 <?php    
                 } else {
                 ?>
-                    <form action="process-mobil.php" method="post">
+                    <!-- form untuk insert -->
+                    <form action="process-mobil.php" method="post"
+                    enctype="multipart/form-data">
                         ID Mobil 
                         <input type="number" name="id_mobil" 
                         class="form-control mb-2" required>
@@ -95,6 +116,10 @@
 
                         Tahun Pembuatan
                         <input type="number" name="tahun_pembuatan" 
+                        class="form-control mb-2" required>
+
+                        Biaya Sewa /hari 
+                        <input type="number" name="biaya_sewa_perhari" 
                         class="form-control mb-2" required>
 
                         Gambar 

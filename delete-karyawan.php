@@ -1,12 +1,12 @@
 <?php
 include("connection.php");
 
-$id_pelanggan = $_GET['id_pelanggan'];
-$sql = "delete from pelanggan where id_pelanggan ='".$id_pelanggan."'";
+$id_karyawan = $_GET['id_karyawan'];
+$sql = "delete from karyawan where id_karyawan ='".$id_karyawan."'";
 $result = mysqli_query($connect, $sql);
 
 if ($result) {
-    header("location:list-pelanggan.php");
+    header("location:list-karyawan.php");
 } else{
     printf('Gagal Menghapus'.mysqli_error($connect));
     exit();
