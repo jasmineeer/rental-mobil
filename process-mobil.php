@@ -1,5 +1,7 @@
 <?php
 include "connection.php";
+
+# mengecek apakah ada data yang sama dengan data yang ditampung pada simpan_mobil
 if (isset($_POST["simpan_mobil"])) {
     # menampung data yg dikirim ke dalam variabel
     $id_mobil = $_POST["id_mobil"];
@@ -15,10 +17,13 @@ if (isset($_POST["simpan_mobil"])) {
     $extension = pathinfo($_FILES["image"]["name"]);
     $ext = $extension["extension"]; // ekstensi file
 
+    # digunakan untuk menamai file dalam folder image, digunakan untuk membedakan nama
     $image = time()."-".$fileName;
 
     # proses upload
+    # digunakan untuk memasukkan file yang ditampung / dikirim ke folder image
     $folderName = "gambar/$image";
+    # 
     if (move_uploaded_file($_FILES["image"]["tmp_name"],$folderName)) {
         # proses insert data ke tabel mobil
         $sql = "insert into mobil values
@@ -38,6 +43,7 @@ if (isset($_POST["simpan_mobil"])) {
     }
 }
 
+# mengecek apakah ada data yang sama dengan data yang ditampung pada simpan_mobil
 elseif (isset($_POST["update_mobil"])) {
     # menampung data yang dikirim
     $id_mobil = $_POST["id_mobil"];
@@ -49,6 +55,8 @@ elseif (isset($_POST["update_mobil"])) {
     $biaya_sewa_perhari = $_POST["biaya_sewa_perhari"];
 
     # jika update data beserta gambar
+    # !empty -> menunjukkan bahwa data tidak kosong 
+    # apabila data tidak kosong, maka mengubah seluruh data dan gambar beserta databasenya
     if (!empty($_FILES["image"]["name"])) {
         # ambil data nama file yg akan dihapus
         $sql = "select * from mobil where id_mobil='$id_mobil'";

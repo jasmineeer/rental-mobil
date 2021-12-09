@@ -1,6 +1,8 @@
-<?php 
+<?php
 session_start();
-if (isset($_SESSION["karyawan"])) {
+# jika saat load halaman ini, pastikan telah login
+# sbg petugas
+if (!isset($_SESSION["karyawan"])) {
     header("location:login.php");
 }
 ?>
@@ -98,9 +100,9 @@ if (isset($_SESSION["karyawan"])) {
                     Tanggal Sewa 
                     <input type="date" name="tgl_sewa" 
                     class="form-control mb-2" required>
-
-                    Tanggal Kembali
-                    <input type="date" name="tgl_kembali" 
+                    
+                    Durasi
+                    <input type="number" name="durasi" 
                     class="form-control mb-2" required>
 
                     <button type="submit" class="btn btn-success btn-block ">

@@ -54,12 +54,13 @@
                 include "connection.php";
                 $sql = "select sewa.*, 
                 pelanggan.*,karyawan.*,sewa.id_sewa,
-                sewa.tgl_sewa,sewa.tgl_kembali, sewa.total_bayar
+                sewa.tgl_sewa,sewa.tgl_kembali,sewa.total_bayar
                 from
                 sewa inner join pelanggan
                 on pelanggan.id_pelanggan=sewa.id_pelanggan
                 inner join karyawan
-                on sewa.id_karyawan=karyawan.id_karyawan";
+                on sewa.id_karyawan=karyawan.id_karyawan
+                order by tgl_sewa desc";
 
                 $hasil = mysqli_query($connect, $sql);
                 while ($sewa = mysqli_fetch_array($hasil)) {
@@ -92,6 +93,11 @@
                             </div>
 
                             <div class="col-lg-3 col-md-6">
+                                <small class="text-info">Durasi Sewa</small>
+                                <h5><?=($sewa["durasi"])?></h5>
+                            </div>
+
+                            <div class="col-lg-3 col-md-6">
                                 <small class="text-info">Mobil yang Disewa</small>
                             <?php 
                             $id_sewa = $sewa["id_sewa"];
@@ -113,20 +119,19 @@
                         <div class="row">
                             <div class="col-lg-4 col-md-6">
                                     <h6>
-                                        <div class="badge badge-success">
+                                        <div class="badge badge-info">
                                         Total Bayar : Rp <?=(number_format($sewa["total_bayar"],2))?>
                                         </div>
                                     </h6>  
                                     
                                     <h6>
                                         Status :
-                                        <?php if ($sewa["tgl_kembali"] != null) {?>
+                                        <?php if ($sewa["tgl_kembali"] == "0000-00-00 00:00:00") {?>
                                             <div class="badge badge-danger mb-2">
                                                 Masih Disewa 
                                             </div>
                                             <br>
-                                            <a href="process-kembali.php?
-                                            id_sewa=<?=($pinjam["id_sewa"])?>"
+                                            <a href="process-kembali.php?id_sewa=<?=($sewa["id_sewa"])?>"
                                             onclick="return confirm('Kamu yakin ingin kembali?')">
                                             <button class="btn btn-sm btn-success">
                                                 Kembalikan
